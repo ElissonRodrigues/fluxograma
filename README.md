@@ -60,29 +60,7 @@ flowchart TD
     
     NEXT_SUPPLIER --> MORE_SUPPLIERS{Mais Fornecedores?}
     MORE_SUPPLIERS -->|Sim| LOOP_START
-    MORE_SUPPLIERS -->|Não| SECOND_PHASE[FASE 2: Usar Modelos Salvos]
-    
-    SECOND_PHASE --> LOOP2_START[Para cada Fornecedor]
-    LOOP2_START --> CHECK_TEORICO{É Teórico<br/>tipo_requisito != técnico?}
-    
-    CHECK_TEORICO -->|Sim| CHECK_ASSOCIATED{Tem Datasheet Associado?}
-    CHECK_TEORICO -->|Não| SKIP_TEORICO[Pular Fornecedor]
-    
-    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo = modelos_produtos datasheet_associado]
-    CHECK_ASSOCIATED -->|Não| PROCESS_WITHOUT_MODEL[Processar sem Modelo Específico]
-    
-    USE_MODEL --> MODIFY_TEXT[Modificar Texto<br/>Adicionar modelo aos requisitos]
-    MODIFY_TEXT --> EXECUTE_LLM[Executar LLM Técnico<br/>Mesmo sendo teórico, usa LLM técnico]
-    EXECUTE_LLM --> REPLACE_MODEL[Substituir Modelo no Resultado<br/>produto_fornecedor = modelo_datasheet]
-    REPLACE_MODEL --> NEXT_SUPPLIER2[Próximo Fornecedor]
-    
-    PROCESS_WITHOUT_MODEL --> EXECUTE_LLM2[Executar LLM Técnico Normal]
-    EXECUTE_LLM2 --> NEXT_SUPPLIER2
-    SKIP_TEORICO --> NEXT_SUPPLIER2
-    
-    NEXT_SUPPLIER2 --> MORE_SUPPLIERS2{Mais Fornecedores?}
-    MORE_SUPPLIERS2 -->|Sim| LOOP2_START
-    MORE_SUPPLIERS2 -->|Não| STANDARD_END([Fim Fluxo Standard])
+    MORE_SUPPLIERS -->|Não| STANDARD_END([Fim Fluxo Standard])
     
     classDef processClass fill:#1e40af,stroke:#93c5fd,stroke-width:2px,color:#ffffff
     classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
@@ -90,11 +68,11 @@ flowchart TD
     classDef infoClass fill:#7c2d12,stroke:#fed7aa,stroke-width:2px,color:#ffffff
     classDef skipClass fill:#6b7280,stroke:#d1d5db,stroke-width:2px,color:#ffffff
     
-    class LOOP_START,PROCESS_TECH,SAVE_MODEL,LOOP2_START,USE_MODEL,MODIFY_TEXT,EXECUTE_LLM,EXECUTE_LLM2,REPLACE_MODEL,PROCESS_WITHOUT_MODEL,NEXT_SUPPLIER,NEXT_SUPPLIER2 processClass
-    class CHECK_TECH,CHECK_TEORICO,CHECK_ASSOCIATED,MORE_SUPPLIERS,MORE_SUPPLIERS2 decisionClass
+    class LOOP_START,PROCESS_TECH,SAVE_MODEL,NEXT_SUPPLIER processClass
+    class CHECK_TECH,MORE_SUPPLIERS decisionClass
     class STANDARD_START,STANDARD_END startEndClass
-    class INFO,SECOND_PHASE infoClass
-    class SKIP_TECH,SKIP_TEORICO skipClass
+    class INFO infoClass
+    class SKIP_TECH skipClass
 ```
 
 ### Fluxo Classified
