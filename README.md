@@ -36,11 +36,11 @@ flowchart TD
     COMPARADOR --> EXCEL[Agente Exportar Excel]
     EXCEL --> END([FIM])
     
-    %% Styling
-    classDef agentClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef decisionClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef flowClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef startEndClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    %% Styling para modo escuro
+    classDef agentClass fill:#1e3a8a,stroke:#60a5fa,stroke-width:2px,color:#ffffff
+    classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+    classDef flowClass fill:#7c3aed,stroke:#c4b5fd,stroke-width:2px,color:#ffffff
+    classDef startEndClass fill:#059669,stroke:#6ee7b7,stroke-width:3px,color:#ffffff
     
     class PDF,EXTRATOR,EXTRATOR_CLASS,FORMATADOR,BUSCADOR,BUSCADOR_CLASS,ROUTER,COMPARADOR,EXCEL agentClass
     class DECISION1,DECISION2,DECISION3 decisionClass
@@ -83,9 +83,9 @@ flowchart TD
     MORE_SUPPLIERS1 -->|Sim| DATASHEET_LOOP
     MORE_SUPPLIERS1 -->|Não| STANDARD_END([Fim Fluxo Standard])
     
-    classDef processClass fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    classDef decisionClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef startEndClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    classDef processClass fill:#1e40af,stroke:#93c5fd,stroke-width:2px,color:#ffffff
+    classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+    classDef startEndClass fill:#059669,stroke:#6ee7b7,stroke-width:3px,color:#ffffff
     
     class PROCESS_ALL,DATASHEET_LOOP,PROCESS_TECH,PROCESS_THEO,SAVE_MODEL,USE_MODEL,MODIFY_TEXT,EXECUTE_LLM1,EXECUTE_LLM2,REPLACE_MODEL,PROCESS_NORMAL processClass
     class CHECK_TYPE,CHECK_ASSOCIATED,MORE_SUPPLIERS1 decisionClass
@@ -120,9 +120,9 @@ flowchart TD
     MORE_PAIRS -->|Sim| PAIR_LOOP
     MORE_PAIRS -->|Não| CLASSIFIED_END([Fim Fluxo Classificado])
     
-    classDef processClass fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    classDef decisionClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef startEndClass fill:#e8f5e8,stroke:#2e7d32,stroke-width:3px
+    classDef processClass fill:#7c3aed,stroke:#c4b5fd,stroke-width:2px,color:#ffffff
+    classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+    classDef startEndClass fill:#059669,stroke:#6ee7b7,stroke-width:3px,color:#ffffff
     
     class IDENTIFY_PAIRS,PROCESS_DATASHEETS,DATASHEET_RESULTS,PAIR_LOOP,COPY_RESULT,PROCESS_HEDEX,GET_MODEL,MODIFY_HEDEX,EXECUTE_HEDEX,ENSURE_MODEL processClass
     class CHECK_DATASHEET,MORE_PAIRS decisionClass
