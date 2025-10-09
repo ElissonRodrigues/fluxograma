@@ -55,7 +55,7 @@ flowchart TD
     CHECK_TECH -->|Sim| PROCESS_TECH[Processar Datasheet Técnico]
     CHECK_TECH -->|Não| SKIP_TECH[Pular para Próximo]
     
-    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos[fornecedor]]
+    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos fornecedor]
     SAVE_MODEL --> NEXT_TECH[Próximo Fornecedor]
     SKIP_TECH --> NEXT_TECH
     
@@ -70,12 +70,12 @@ flowchart TD
     CHECK_HEDEX -->|Sim| CHECK_ASSOCIATED{Tem Datasheet Associado?}
     CHECK_HEDEX -->|Não| SKIP_HEDEX[Pular para Próximo]
     
-    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo_datasheet = modelos_produtos[datasheet_associado]]
+    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo_datasheet = modelos_produtos datasheet_associado]
     CHECK_ASSOCIATED -->|Não| PROCESS_NORMAL[Processamento Normal]
     
     USE_MODEL --> MODIFY_TEXT[Modificar Texto com Modelo<br/>Adicionar modelo ao texto e busca]
     MODIFY_TEXT --> EXECUTE_LLM1[Executar LLM Teórico]
-    EXECUTE_LLM1 --> REPLACE_MODEL[Substituir Modelo no Resultado<br/>resultado["produto_fornecedor"] = modelo_datasheet]
+    EXECUTE_LLM1 --> REPLACE_MODEL[Substituir Modelo no Resultado<br/>resultado produto_fornecedor = modelo_datasheet]
     REPLACE_MODEL --> NEXT_HEDEX[Próximo Fornecedor]
     
     PROCESS_NORMAL --> EXECUTE_LLM2[Executar LLM Normal]
