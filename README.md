@@ -54,7 +54,7 @@ flowchart TD
     CHECK_TECH -->|Sim| PROCESS_TECH[Processar Datasheet Técnico<br/>Executar LLM com requisitos técnicos]
     CHECK_TECH -->|Não| SKIP_TECH[Pular Fornecedor<br/>Não processa teóricos/hedex]
     
-    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos[fornecedor] = modelo]
+    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos fornecedor = modelo]
     SAVE_MODEL --> NEXT_SUPPLIER[Próximo Fornecedor]
     SKIP_TECH --> NEXT_SUPPLIER
     
@@ -68,7 +68,7 @@ flowchart TD
     CHECK_TEORICO -->|Sim| CHECK_ASSOCIATED{Tem Datasheet Associado?}
     CHECK_TEORICO -->|Não| SKIP_TEORICO[Pular Fornecedor]
     
-    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo = modelos_produtos[datasheet_associado]]
+    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo = modelos_produtos datasheet_associado]
     CHECK_ASSOCIATED -->|Não| PROCESS_WITHOUT_MODEL[Processar sem Modelo Específico]
     
     USE_MODEL --> MODIFY_TEXT[Modificar Texto<br/>Adicionar modelo aos requisitos]
