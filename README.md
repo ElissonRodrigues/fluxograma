@@ -116,6 +116,7 @@ flowchart TD
 ## Agentes Disponíveis
 
 ```mermaid
+%%{init: {"theme": "dark", "themeVariables": {"primaryColor": "#1e40af", "primaryTextColor": "#ffffff", "primaryBorderColor": "#93c5fd", "lineColor": "#60a5fa", "secondaryColor": "#7c3aed", "tertiaryColor": "#059669", "background": "#1f2937", "mainBkg": "#1f2937", "secondBkg": "#374151", "tertiaryBkg": "#4b5563"}}}%%
 mindmap
   root((Agentes PAP))
     Extração
@@ -135,8 +136,6 @@ mindmap
     Base
       AgentBase
       AgentFactory
-
-%%{init: {"mindmap": {"theme": "dark"}}}%%
 ```
 
 ## Configurações de Modelo
@@ -159,6 +158,7 @@ O workflow suporta diferentes configurações de modelo:
 O **Router de Fornecedores** (`workflow_type_router`) é um componente central que executa internamente os fluxos Standard ou Classified baseado no `workflow_type` definido no estado. Ele não é uma decisão condicional no grafo, mas sim um agente que contém a lógica de ambos os fluxos.
 
 ```mermaid
+%%{init: {"theme": "dark", "themeVariables": {"background": "#1f2937", "mainBkg": "#1f2937", "secondBkg": "#374151"}}}%%
 graph TD
     ROUTER[workflow_type_router] --> CHECK{workflow_type no estado}
     CHECK -->|"standard"| STANDARD[Executa suppliers_work_type.standard]
@@ -179,6 +179,7 @@ graph TD
 ## Fluxo de Decisão Principal
 
 ```mermaid
+%%{init: {"theme": "dark", "themeVariables": {"background": "#1f2937", "mainBkg": "#1f2937", "secondBkg": "#374151"}}}%%
 graph LR
     A[Entrada] --> B{workflow_type?}
     B -->|standard| C[Fluxo Padrão]
