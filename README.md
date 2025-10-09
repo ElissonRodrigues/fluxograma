@@ -46,55 +46,55 @@ flowchart TD
 ### Fluxo Standard
 ```mermaid
 flowchart TD
-    STANDARD_START([Início Fluxo Standard]) --> PHASE1[FASE 1: Processar Datasheets]
+    STANDARD_START([Início Fluxo Standard]) --> INFO[Recebe apenas coleções DATASHEET<br/>Não tem acesso a coleções HEDEX]
     
-    %% FASE 1: Processamento de Datasheets
-    PHASE1 --> DATASHEET_LOOP[Para cada Fornecedor]
-    DATASHEET_LOOP --> CHECK_TECH{É Técnico?}
+    INFO --> LOOP_START[Para cada Fornecedor]
+    LOOP_START --> CHECK_TECH{É Técnico<br/>tipo_requisito == técnico?}
     
-    CHECK_TECH -->|Sim| PROCESS_TECH[Processar Datasheet Técnico]
-    CHECK_TECH -->|Não| SKIP_TECH[Pular para Próximo]
+    CHECK_TECH -->|Sim| PROCESS_TECH[Processar Datasheet Técnico<br/>Executar LLM com requisitos técnicos]
+    CHECK_TECH -->|Não| SKIP_TECH[Pular Fornecedor<br/>Não processa teóricos/hedex]
     
-    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos fornecedor]
-    SAVE_MODEL --> NEXT_TECH[Próximo Fornecedor]
-    SKIP_TECH --> NEXT_TECH
+    PROCESS_TECH --> SAVE_MODEL[Salvar Modelo do Produto<br/>modelos_produtos[fornecedor] = modelo]
+    SAVE_MODEL --> NEXT_SUPPLIER[Próximo Fornecedor]
+    SKIP_TECH --> NEXT_SUPPLIER
     
-    NEXT_TECH --> MORE_TECH{Mais Fornecedores?}
-    MORE_TECH -->|Sim| DATASHEET_LOOP
-    MORE_TECH -->|Não| PHASE2[FASE 2: Processar Hedex]
+    NEXT_SUPPLIER --> MORE_SUPPLIERS{Mais Fornecedores?}
+    MORE_SUPPLIERS -->|Sim| LOOP_START
+    MORE_SUPPLIERS -->|Não| SECOND_PHASE[FASE 2: Usar Modelos Salvos]
     
-    %% FASE 2: Processamento de Hedex
-    PHASE2 --> HEDEX_LOOP[Para cada Fornecedor]
-    HEDEX_LOOP --> CHECK_HEDEX{É Teórico/Hedex?}
+    SECOND_PHASE --> LOOP2_START[Para cada Fornecedor]
+    LOOP2_START --> CHECK_TEORICO{É Teórico<br/>tipo_requisito != técnico?}
     
-    CHECK_HEDEX -->|Sim| CHECK_ASSOCIATED{Tem Datasheet Associado?}
-    CHECK_HEDEX -->|Não| SKIP_HEDEX[Pular para Próximo]
+    CHECK_TEORICO -->|Sim| CHECK_ASSOCIATED{Tem Datasheet Associado?}
+    CHECK_TEORICO -->|Não| SKIP_TEORICO[Pular Fornecedor]
     
-    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo_datasheet = modelos_produtos datasheet_associado]
-    CHECK_ASSOCIATED -->|Não| PROCESS_NORMAL[Processamento Normal]
+    CHECK_ASSOCIATED -->|Sim| USE_MODEL[Usar Modelo Salvo<br/>modelo = modelos_produtos[datasheet_associado]]
+    CHECK_ASSOCIATED -->|Não| PROCESS_WITHOUT_MODEL[Processar sem Modelo Específico]
     
-    USE_MODEL --> MODIFY_TEXT[Modificar Texto com Modelo<br/>Adicionar modelo ao texto e busca]
-    MODIFY_TEXT --> EXECUTE_LLM1[Executar LLM Teórico]
-    EXECUTE_LLM1 --> REPLACE_MODEL[Substituir Modelo no Resultado<br/>resultado produto_fornecedor = modelo_datasheet]
-    REPLACE_MODEL --> NEXT_HEDEX[Próximo Fornecedor]
+    USE_MODEL --> MODIFY_TEXT[Modificar Texto<br/>Adicionar modelo aos requisitos]
+    MODIFY_TEXT --> EXECUTE_LLM[Executar LLM Técnico<br/>Mesmo sendo teórico, usa LLM técnico]
+    EXECUTE_LLM --> REPLACE_MODEL[Substituir Modelo no Resultado<br/>produto_fornecedor = modelo_datasheet]
+    REPLACE_MODEL --> NEXT_SUPPLIER2[Próximo Fornecedor]
     
-    PROCESS_NORMAL --> EXECUTE_LLM2[Executar LLM Normal]
-    EXECUTE_LLM2 --> NEXT_HEDEX
-    SKIP_HEDEX --> NEXT_HEDEX
+    PROCESS_WITHOUT_MODEL --> EXECUTE_LLM2[Executar LLM Técnico Normal]
+    EXECUTE_LLM2 --> NEXT_SUPPLIER2
+    SKIP_TEORICO --> NEXT_SUPPLIER2
     
-    NEXT_HEDEX --> MORE_HEDEX{Mais Fornecedores?}
-    MORE_HEDEX -->|Sim| HEDEX_LOOP
-    MORE_HEDEX -->|Não| STANDARD_END([Fim Fluxo Standard])
+    NEXT_SUPPLIER2 --> MORE_SUPPLIERS2{Mais Fornecedores?}
+    MORE_SUPPLIERS2 -->|Sim| LOOP2_START
+    MORE_SUPPLIERS2 -->|Não| STANDARD_END([Fim Fluxo Standard])
     
     classDef processClass fill:#1e40af,stroke:#93c5fd,stroke-width:2px,color:#ffffff
     classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
     classDef startEndClass fill:#059669,stroke:#6ee7b7,stroke-width:3px,color:#ffffff
-    classDef phaseClass fill:#7c2d12,stroke:#fed7aa,stroke-width:3px,color:#ffffff
+    classDef infoClass fill:#7c2d12,stroke:#fed7aa,stroke-width:2px,color:#ffffff
+    classDef skipClass fill:#6b7280,stroke:#d1d5db,stroke-width:2px,color:#ffffff
     
-    class DATASHEET_LOOP,PROCESS_TECH,SAVE_MODEL,HEDEX_LOOP,USE_MODEL,MODIFY_TEXT,EXECUTE_LLM1,EXECUTE_LLM2,REPLACE_MODEL,PROCESS_NORMAL,SKIP_TECH,SKIP_HEDEX,NEXT_TECH,NEXT_HEDEX processClass
-    class CHECK_TECH,CHECK_HEDEX,CHECK_ASSOCIATED,MORE_TECH,MORE_HEDEX decisionClass
+    class LOOP_START,PROCESS_TECH,SAVE_MODEL,LOOP2_START,USE_MODEL,MODIFY_TEXT,EXECUTE_LLM,EXECUTE_LLM2,REPLACE_MODEL,PROCESS_WITHOUT_MODEL,NEXT_SUPPLIER,NEXT_SUPPLIER2 processClass
+    class CHECK_TECH,CHECK_TEORICO,CHECK_ASSOCIATED,MORE_SUPPLIERS,MORE_SUPPLIERS2 decisionClass
     class STANDARD_START,STANDARD_END startEndClass
-    class PHASE1,PHASE2 phaseClass
+    class INFO,SECOND_PHASE infoClass
+    class SKIP_TECH,SKIP_TEORICO skipClass
 ```
 
 ### Fluxo Classified
