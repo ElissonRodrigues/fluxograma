@@ -116,7 +116,7 @@ flowchart TD
 ## Agentes Disponíveis
 
 ```mermaid
-%%{init: {"theme": "dark"}}%%
+%%{init: {"theme": "base", "darkMode": true, "themeVariables": {"background": "#1f2937", "primaryTextColor": "#ffffff", "lineColor": "#9ca3af", "textColor": "#ffffff", "pie1": "#374151", "pie2": "#4b5563", "pie3": "#6b7280", "pie4": "#1e3a8a", "pie5": "#7c3aed", "pie6": "#059669"}}}%%
 mindmap
   root((Agentes PAP))
     Extração
