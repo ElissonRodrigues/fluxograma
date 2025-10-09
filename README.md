@@ -22,16 +22,10 @@ flowchart TD
     DECISION2 -->|Standard| BUSCADOR[Agente Buscador Especificações]
     DECISION2 -->|Classified| BUSCADOR_CLASS[Agente Buscador Especificações Classificadas]
     
-    BUSCADOR --> ROUTER[Router de Fornecedores]
+    BUSCADOR --> ROUTER[Router de Fornecedores<br/>workflow_type_router]
     BUSCADOR_CLASS --> ROUTER
     
-    ROUTER --> DECISION3{Tipo de Fluxo?}
-    
-    DECISION3 -->|Standard| STANDARD_FLOW[Fluxo Standard]
-    DECISION3 -->|Classified| CLASSIFIED_FLOW[Fluxo Classificado]
-    
-    STANDARD_FLOW --> COMPARADOR[Agente Comparador Requisitos Edital-Fornecedor]
-    CLASSIFIED_FLOW --> COMPARADOR
+    ROUTER --> COMPARADOR[Agente Comparador Requisitos Edital-Fornecedor]
     
     COMPARADOR --> EXCEL[Agente Exportar Excel]
     EXCEL --> END([FIM])
@@ -43,8 +37,7 @@ flowchart TD
     classDef startEndClass fill:#059669,stroke:#6ee7b7,stroke-width:3px,color:#ffffff
     
     class PDF,EXTRATOR,EXTRATOR_CLASS,FORMATADOR,BUSCADOR,BUSCADOR_CLASS,ROUTER,COMPARADOR,EXCEL agentClass
-    class DECISION1,DECISION2,DECISION3 decisionClass
-    class STANDARD_FLOW,CLASSIFIED_FLOW flowClass
+    class DECISION1,DECISION2 decisionClass
     class START,END startEndClass
 ```
 
@@ -187,6 +180,20 @@ O workflow suporta diferentes configurações de modelo:
 - **OpenAI**: GPT-4o
 - **Groq**: Modelos otimizados para velocidade
 
+## Funcionamento do Router de Fornecedores
+
+O **Router de Fornecedores** (`workflow_type_router`) é um componente central que executa internamente os fluxos Standard ou Classified baseado no `workflow_type` definido no estado. Ele não é uma decisão condicional no grafo, mas sim um agente que contém a lógica de ambos os fluxos.
+
+```mermaid
+graph TD
+    ROUTER[workflow_type_router] --> CHECK{workflow_type no estado}
+    CHECK -->|"standard"| STANDARD[Executa suppliers_work_type.standard]
+    CHECK -->|"classified"| CLASSIFIED[Executa suppliers_work_type.classified]
+    
+    STANDARD --> RESULT[Retorna requisitos_dict processados]
+    CLASSIFIED --> RESULT
+```
+
 ## Fluxo de Decisão Principal
 
 ```mermaid
@@ -201,7 +208,7 @@ graph LR
     E --> G[Buscador Padrão]
     F --> H[Buscador Classificado]
     
-    G --> I[Router Standard]
+    G --> I[Router Executa Fluxo Interno]
     H --> I
     
     I --> J[Comparador]
