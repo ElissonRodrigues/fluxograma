@@ -135,6 +135,8 @@ mindmap
     Base
       AgentBase
       AgentFactory
+
+%%{init: {"mindmap": {"theme": "dark"}}}%%
 ```
 
 ## Configurações de Modelo
@@ -164,6 +166,14 @@ graph TD
     
     STANDARD --> RESULT[Retorna requisitos_dict processados]
     CLASSIFIED --> RESULT
+    
+    classDef routerClass fill:#1e40af,stroke:#93c5fd,stroke-width:2px,color:#ffffff
+    classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+    classDef processClass fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff
+    
+    class ROUTER routerClass
+    class CHECK decisionClass
+    class STANDARD,CLASSIFIED,RESULT processClass
 ```
 
 ## Fluxo de Decisão Principal
@@ -186,6 +196,16 @@ graph LR
     I --> J[Comparador]
     J --> K[Excel]
     K --> L[Saída]
+    
+    classDef inputOutputClass fill:#059669,stroke:#6ee7b7,stroke-width:2px,color:#ffffff
+    classDef decisionClass fill:#dc2626,stroke:#fca5a5,stroke-width:2px,color:#ffffff
+    classDef processClass fill:#1e40af,stroke:#93c5fd,stroke-width:2px,color:#ffffff
+    classDef routerClass fill:#7c3aed,stroke:#c4b5fd,stroke-width:2px,color:#ffffff
+    
+    class A,L inputOutputClass
+    class B decisionClass
+    class C,D,E,F,G,H,J,K processClass
+    class I routerClass
 ```
 
 ## Observações Importantes
