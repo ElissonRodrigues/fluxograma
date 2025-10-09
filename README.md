@@ -1,8 +1,5 @@
 # Fluxograma do Workflow Multiagente PAP
 
-## Visão Geral
-Este fluxograma representa o workflow multiagente para processamento de licitações (PAP - Processo de Análise de Propostas), mostrando dois fluxos principais: **Standard** e **Classified**.
-
 ## Fluxograma Principal
 
 ```mermaid
