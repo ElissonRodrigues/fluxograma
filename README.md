@@ -208,11 +208,3 @@ graph LR
     class C,D,E,F,G,H,J,K processClass
     class I routerClass
 ```
-
-## Observações Importantes
-
-1. **Dois Fluxos Principais**: O sistema suporta fluxo `standard` (original) e `classified` (otimizado)
-2. **Processamento Inteligente**: No fluxo classificado, se o datasheet atende aos requisitos, os hedex associados não são processados
-3. **Consistência de Modelos**: O sistema garante que o modelo do produto seja consistente entre datasheet e hedex
-4. **Configuração Flexível**: Suporte a múltiplos provedores de LLM com configuração dinâmica
-5. **Logging Detalhado**: Cada etapa é logada para rastreabilidade e debugging
