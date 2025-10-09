@@ -112,24 +112,6 @@ flowchart TD
     class CLASSIFIED_START,CLASSIFIED_END startEndClass
 ```
 
-## Estados do Workflow
-
-```mermaid
-classDiagram
-    class State {
-        +string edital_pdf_path
-        +list fornecedores_collections
-        +string extracted_text_edital
-        +string requisitos_llm_response
-        +dict requisitos_dict
-        +string output_filename
-        +string workflow_type
-        +dict especs_info
-    }
-    
-    State : Representa o estado compartilhado entre agentes
-    State : Contém dados do edital, fornecedores e resultados
-```
 
 ## Agentes Disponíveis
 
